@@ -14,6 +14,9 @@ TextureImporter:
   - first:
       213: 3027746288410536033
     second: player_S_1
+  - first:
+      213: 1376648889513722607
+    second: pellet
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -190,6 +193,27 @@ TextureImporter:
       bones: []
       spriteID: 168a7b62537b40a20800000000000000
       internalID: 3027746288410536033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pellet
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 274
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe2c6e70fd6da1310800000000000000
+      internalID: 1376648889513722607
       vertices: []
       indices: 
       edges: []

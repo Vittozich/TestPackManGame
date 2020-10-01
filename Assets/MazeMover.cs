@@ -8,14 +8,15 @@ public class MazeMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        desiredDirection = new Vector2(-1, 0);
+        desiredDirection = new Vector2(0, 0);
 
         //set our initial target position to be our starting position
         //so that the Update will, we, well, update to the target
         targetPos = transform.position;
 
         //this works as long as there is only ONE tulemap in the scene
-        wallTileMap = GameObject.FindObjectOfType<Tilemap>();
+        //Такой способ получить новый Tilemap - создав скрипт для tilemaps
+        wallTileMap = GameObject.FindObjectOfType<WallTilemapController>().GetComponent<Tilemap>();
     }
 
     float Speed = 3; // How many world-space "tiles" this unit moves in one second
