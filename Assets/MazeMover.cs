@@ -20,7 +20,7 @@ public class MazeMover : MonoBehaviour
 
     float Speed = 3; // How many world-space "tiles" this unit moves in one second
 
-    public Vector2 desiredDirection; // THe currecnt direction we want to move in
+    Vector2 desiredDirection; // THe currecnt direction we want to move in
 
     Vector2 targetPos; // Always a legal, empty tile
 
@@ -49,21 +49,23 @@ public class MazeMover : MonoBehaviour
     // "real" collisions, so we don't need to stress about FixedUpdate
     //}
 
-    void UpdateTargetPosition()
+    void UpdateTargetPosition(bool force = false)
     {
-        // Have ve reached our position
-        float distanceToTarget = Vector3.Distance(transform.position, targetPos);
+        if (force == false)
+        {
+            // Have ve reached our position
+            float distanceToTarget = Vector3.Distance(transform.position, targetPos);
 
-        if (distanceToTarget > 0)
-            //not yet, no need to update anything
-            return;
+            if (distanceToTarget > 0)
+                //not yet, no need to update anything
+                return;
+        }
+
 
         //if we get here, it meens we need a new target position
         targetPos += desiredDirection;
 
-        //Normalize the target position
-
-        targetPos = new Vector2(Mathf.FloorToInt(targetPos.x), Mathf.FloorToInt(targetPos.y));
+        targetPos = FloorPosition(targetPos);
 
         if (IsTileEmpty(targetPos))
             return;
@@ -73,6 +75,14 @@ public class MazeMover : MonoBehaviour
         targetPos = transform.position;
     }
 
+    Vector2 FloorPosition(Vector2 pos)
+    {
+        //Normalize the target position
+        // This might not line up right if we have a wierd offset tilemap
+        // A " better" solution might be to lookup the tile at the new 
+        // targetPos, then read back that Tile's world coordinate?
+        return new Vector2(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
+    }
 
     bool IsTileEmpty(Vector2 pos)
     {
@@ -116,5 +126,33 @@ public class MazeMover : MonoBehaviour
 
         //do the move
         transform.Translate(movementThisUpdate);
+    }
+
+    public void SetDesiredDirection(Vector2 newDir)
+    {
+        //TODO: Santy checks? 
+        //Make sure not diagonal? in Theory, our PlayerMover/Enemy
+
+        //If we're selection a direction that would sla us into a wall,
+        //this will cause us to stop - which doesn't feel right
+        Vector2 testPos = targetPos + newDir;
+        if (IsTileEmpty(testPos) == false)
+            return;
+
+        Vector2 oldDir = desiredDirection;
+        desiredDirection = newDir;
+
+        //if the input is to reserve our dirrection, do it instantlye
+        //  if ((oldDir.x * newDir.x) < 0 || (oldDir.y * newDir.y) < 0)
+        // .Dot - Для нормализованных векторов точка возвращает 1, если они указывают в одном и том же направлении;
+        //-1, если они указывают в совершенно противоположных направлениях; и промежуточное число для других случаев
+        //(например, точка возвращает ноль, если векторы перпендикулярны).
+        if (Vector2.Dot(oldDir, newDir) < 0)
+            UpdateTargetPosition(true);
+    }
+
+    public Vector2 GetDiesiredDirection()
+    {
+        return desiredDirection;
     }
 }
