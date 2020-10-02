@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PelletTilemapController : MonoBehaviour
+public class PelletEater : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
