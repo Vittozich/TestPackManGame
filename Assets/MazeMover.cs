@@ -16,7 +16,7 @@ public class MazeMover : MonoBehaviour
 
         //this works as long as there is only ONE tulemap in the scene
         //Такой способ получить новый Tilemap - создав скрипт (я создал этот скрипт как модель) для tilemaps
-        wallTileMap = GameObject.FindObjectOfType<WallTilemapModel>().GetComponent<Tilemap>();
+        wallTileMap = GameManager.WallTilemap;
     }
 
     float Speed = 3; // How many world-space "tiles" this unit moves in one second

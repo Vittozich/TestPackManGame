@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class WallTilemapModel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Empty class just used to identify wall tilemaps right now.
 }
