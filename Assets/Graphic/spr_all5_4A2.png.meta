@@ -17,6 +17,12 @@ TextureImporter:
   - first:
       213: 1376648889513722607
     second: pellet
+  - first:
+      213: 2094727068239523346
+    second: apple
+  - first:
+      213: -282584331122778580
+    second: enemy
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -214,6 +220,48 @@ TextureImporter:
       bones: []
       spriteID: fe2c6e70fd6da1310800000000000000
       internalID: 1376648889513722607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apple
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 106
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21eefc39b27f11d10800000000000000
+      internalID: 2094727068239523346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 232
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ed55c4c0f041cf0800000000000000
+      internalID: -282584331122778580
       vertices: []
       indices: 
       edges: []

@@ -43,20 +43,24 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
-    totalSpriteSurfaceArea: 2000
+    totalSpriteSurfaceArea: 2800
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: -8546443596872256937, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
   - {fileID: 7334376006123907947, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
   - {fileID: -3875462933296395419, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
+  - {fileID: 2094727068239523346, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
   - {fileID: 1376648889513722607, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
   - {fileID: 3027746288410536033, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
+  - {fileID: -282584331122778580, guid: 556633b737e47c84384e8ed0337ecdcd, type: 3}
   m_PackedSpriteNamesToIndex:
   - wall_NEST
   - spr_all5_4A2_0
   - wall_NW
+  - apple
   - pellet
   - player_S_1
+  - enemy
   m_Tag: New Sprite Atlas
   m_IsVariant: 0

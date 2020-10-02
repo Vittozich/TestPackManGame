@@ -16,7 +16,7 @@ public class PlayerMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+
 
         Vector2 newDir = new Vector2(
             Input.GetAxisRaw("Horizontal"),
@@ -26,7 +26,7 @@ public class PlayerMover : MonoBehaviour
         if (newDir.SqrMagnitude() < 0.05f)
             return;
 
-            if (Mathf.Abs(newDir.x) >= Mathf.Abs(newDir.y))
+        if (Mathf.Abs(newDir.x) >= Mathf.Abs(newDir.y))
             newDir.y = 0;
         else
             newDir.x = 0;

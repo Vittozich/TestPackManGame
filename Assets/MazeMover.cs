@@ -8,8 +8,6 @@ public class MazeMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        desiredDirection = new Vector2(0, 0);
-
         //set our initial target position to be our starting position
         //so that the Update will, we, well, update to the target
         targetPos = transform.position;
@@ -19,7 +17,14 @@ public class MazeMover : MonoBehaviour
         wallTileMap = GameManager.WallTilemap;
     }
 
+    //Делегирует вызов? todo - повторить это
+    public delegate void OnEnterNewTileDelegate();
+    public event OnEnterNewTileDelegate OnEnterNewTile;
+
+
     float Speed = 3; // How many world-space "tiles" this unit moves in one second
+
+    float tileDistanceTolerance = 0.01f; //how close to the target position counts arriving
 
     Vector2 desiredDirection; // THe currecnt direction we want to move in
 
@@ -31,7 +36,9 @@ public class MazeMover : MonoBehaviour
     // this is the best place to read inputs and to thing like upgrating animations
     void Update()
     {
-        //First, make sure we can legally move in the direction we want
+        //В классе, который принимает 1 метод EnemyMover данная переменная не инициализируется.
+        if (wallTileMap == null)
+            wallTileMap = GameManager.WallTilemap;
 
         UpdateTargetPosition();
 
@@ -62,7 +69,16 @@ public class MazeMover : MonoBehaviour
                 return;
         }
 
+        if (OnEnterNewTile != null)
+            OnEnterNewTile();
 
+        //If we get here, we've just entered a new tile
+        OnEnterNewTilePlayer();
+
+    }
+
+    void OnEnterNewTilePlayer()
+    {
         //if we get here, it meens we need a new target position
         targetPos += desiredDirection;
 
@@ -85,6 +101,13 @@ public class MazeMover : MonoBehaviour
         return new Vector2(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.y));
     }
 
+    public bool IsGoingToHittingWall()
+    {
+        //returns true if our trgetPos is a wall
+        return IsTileEmpty(targetPos + desiredDirection) == false;
+    }
+
+
     bool IsTileEmpty(Vector2 pos)
     {
         // is there a tile at pos
@@ -96,6 +119,7 @@ public class MazeMover : MonoBehaviour
         // Get the tile from tilemap at position pos
 
         //First we need to change the World position, to a tile cell index
+
         Vector3Int cellPos = wallTileMap.WorldToCell(pos);
 
         //Now return the catual tile
@@ -127,18 +151,22 @@ public class MazeMover : MonoBehaviour
 
         //do the move
         transform.Translate(movementThisUpdate);
+
+        if (Vector2.Distance(targetPos, (Vector2)transform.position) < tileDistanceTolerance)
+            transform.position = targetPos;
     }
 
-    public void SetDesiredDirection(Vector2 newDir)
+    public void SetDesiredDirection(Vector2 newDir, bool preventInvalidDirection = false)
     {
         //TODO: Santy checks? 
         //Make sure not diagonal? in Theory, our PlayerMover/Enemy
 
         //If we're selection a direction that would sla us into a wall,
         //this will cause us to stop - which doesn't feel right
-        Vector2 testPos = targetPos + newDir;
-        if (IsTileEmpty(testPos) == false)
-            return;
+
+        if (!preventInvalidDirection)
+            if (checkTestPosition(newDir))
+                return;
 
         Vector2 oldDir = desiredDirection;
         desiredDirection = newDir;
@@ -150,6 +178,14 @@ public class MazeMover : MonoBehaviour
         //(например, точка возвращает ноль, если векторы перпендикулярны).
         if (Vector2.Dot(oldDir, newDir) < 0)
             UpdateTargetPosition(true);
+    }
+
+    bool checkTestPosition(Vector2 newDir)
+    {
+        Vector2 testPos = targetPos + newDir;
+        if (IsTileEmpty(testPos) == false)
+            return true;
+        return false;
     }
 
     public Vector2 GetDiesiredDirection()
